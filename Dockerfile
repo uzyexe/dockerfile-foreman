@@ -3,7 +3,7 @@ FROM debian:wheezy
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -qq && \
-    apt-get install -qy wget git dnsutils postgresql sqlite3 && \
+    apt-get install -qy wget git dnsutils sqlite3 && \
     echo "deb http://deb.theforeman.org/ wheezy 1.7" > /etc/apt/sources.list.d/foreman.list && \
     echo "deb http://deb.theforeman.org/ plugins 1.7" >> /etc/apt/sources.list.d/foreman.list && \
     wget -q http://deb.theforeman.org/pubkey.gpg -O- | apt-key add - && \
@@ -15,7 +15,6 @@ ENV FOREOPTS --foreman-admin-password=changeme \
              --foreman-db-type=sqlite \
              --foreman-db-adapter=sqlite3 \
              --foreman-db-database=db/production.sqlite3 \
-             --foreman-locations-enabled \
              --enable-foreman-compute-ec2 \
              --enable-foreman-compute-gce \
              --enable-foreman-compute-ovirt \
@@ -23,6 +22,7 @@ ENV FOREOPTS --foreman-admin-password=changeme \
              --enable-foreman-compute-libvirt \
              --enable-foreman-compute-openstack \
              --enable-foreman-compute-rackspace \
+             --enable-foreman-proxy \
              --enable-puppet \
              --puppet-listen=true \
              --puppet-show-diff=true \
@@ -35,6 +35,7 @@ CMD ( test ! -f /etc/foreman/.first_run_completed && \
         touch /etc/foreman/.first_run_completed \
         ) \
     ); \
+    /etc/init.d/postgresql restart; \
     /etc/init.d/foreman restart; \
     /etc/init.d/foreman-proxy restart; \
     /etc/init.d/apache2 restart; \
