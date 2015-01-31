@@ -3,7 +3,7 @@ FROM debian:wheezy
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -qq && \
-    apt-get install -qy wget git dnsutils postgresql sqlite3 && \
+    apt-get install -qy wget vim git dnsutils postgresql sqlite3 && \
     echo "deb http://deb.theforeman.org/ wheezy 1.7" > /etc/apt/sources.list.d/foreman.list && \
     echo "deb http://deb.theforeman.org/ plugins 1.7" >> /etc/apt/sources.list.d/foreman.list && \
     wget -q http://deb.theforeman.org/pubkey.gpg -O- | apt-key add - && \
