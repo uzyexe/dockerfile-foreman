@@ -3,12 +3,12 @@ FROM debian:wheezy
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -qq && \
-    apt-get install -qy wget git dnsutils sqlite3 && \
+    apt-get install -qy wget git dnsutils postgresql sqlite3 && \
     echo "deb http://deb.theforeman.org/ wheezy 1.7" > /etc/apt/sources.list.d/foreman.list && \
     echo "deb http://deb.theforeman.org/ plugins 1.7" >> /etc/apt/sources.list.d/foreman.list && \
     wget -q http://deb.theforeman.org/pubkey.gpg -O- | apt-key add - && \
     apt-get update -qq && \
-    apt-get install -qy foreman-installer foreman foreman-sqlite3
+    apt-get install -qy foreman-installer foreman foreman-proxy foreman-sqlite3
 
 ENV FOREOPTS --foreman-admin-password=changeme \
              --foreman-environment=development \
@@ -35,7 +35,6 @@ CMD ( test ! -f /etc/foreman/.first_run_completed && \
         touch /etc/foreman/.first_run_completed \
         ) \
     ); \
-    /etc/init.d/postgresql restart; \
     /etc/init.d/foreman restart; \
     /etc/init.d/foreman-proxy restart; \
     /etc/init.d/apache2 restart; \
