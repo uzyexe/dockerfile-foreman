@@ -15,6 +15,7 @@ ENV FOREOPTS --foreman-admin-password=changeme \
              --foreman-db-type=sqlite \
              --foreman-db-adapter=sqlite3 \
              --foreman-db-database=db/production.sqlite3 \
+             --foreman-proxy-tftp-root=/srv/tftp \
              --enable-foreman-compute-ec2 \
              --enable-foreman-compute-gce \
              --enable-foreman-compute-ovirt \
