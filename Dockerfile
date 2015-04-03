@@ -33,6 +33,7 @@ CMD ( test ! -f /etc/foreman/.first_run_completed && \
     /etc/init.d/foreman-proxy restart; \
     /etc/init.d/apache2 restart; \
     /etc/init.d/tftpd-hpa restart; \
+    /etc/init.d/isc-dhcp-server restart; \
     /etc/init.d/puppet restart; \
     tail -f /var/log/foreman/production.log
 
