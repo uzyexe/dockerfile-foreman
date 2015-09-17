@@ -23,6 +23,7 @@ ENV FOREOPTS --foreman-environment=development \
 CMD ( test ! -f /etc/foreman/.first_run_completed && \
         ( echo "FIRST-RUN: Please wait while Foreman is installed and configured..."; \
         /usr/sbin/foreman-installer $FOREOPTS; \
+        foreman-rake permissions:reset; \
         sed -i -e "s/START=no/START=yes/g" /etc/default/foreman; \
         touch /etc/foreman/.first_run_completed \
         ) \
