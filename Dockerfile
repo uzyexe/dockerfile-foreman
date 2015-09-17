@@ -3,18 +3,16 @@ FROM debian:wheezy
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -qq && \
-    apt-get install -qy wget vim git dnsutils postgresql sqlite3 && \
+    apt-get install -qy wget vim git dnsutils postgresql sqlite3 apache2 && \
     echo "deb http://deb.theforeman.org/ wheezy 1.8" > /etc/apt/sources.list.d/foreman.list && \
     echo "deb http://deb.theforeman.org/ plugins 1.8" >> /etc/apt/sources.list.d/foreman.list && \
     wget -q http://deb.theforeman.org/pubkey.gpg -O- | apt-key add - && \
     apt-get update -qq && \
-    apt-get install -qy foreman-installer foreman foreman-proxy foreman-sqlite3
+    apt-get install -qy foreman-installer foreman foreman-proxy foreman-sqlite3 && \
+    apt-get --only-upgrade install ruby\* foreman\*
 
-ENV FOREOPTS --foreman-admin-password=changeme \
-             --foreman-environment=development \
+ENV FOREOPTS --foreman-environment=development \
              --foreman-db-type=sqlite \
-             --foreman-db-adapter=sqlite3 \
-             --foreman-db-database=db/production.sqlite3 \
              --foreman-proxy-tftp-root=/srv/tftp \
              --enable-foreman-proxy \
              --enable-puppet \
