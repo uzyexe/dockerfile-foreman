@@ -11,7 +11,8 @@ RUN apt-get update -qq && \
     apt-get install -qy foreman-installer foreman foreman-proxy foreman-sqlite3 && \
     apt-get --only-upgrade install ruby\* foreman\*
 
-ENV FOREOPTS --foreman-environment=development \
+ENV FOREOPTS --foreman-admin-password=is_this_dummy \
+             --foreman-environment=development \
              --foreman-db-type=sqlite \
              --foreman-proxy-tftp-root=/srv/tftp \
              --enable-foreman-proxy \
